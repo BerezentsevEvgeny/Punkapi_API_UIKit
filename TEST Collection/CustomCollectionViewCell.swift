@@ -15,6 +15,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "house")
         imageView.backgroundColor = .yellow
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -22,6 +23,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let myLabel = UILabel()
         myLabel.text = "Hello World!"
         myLabel.backgroundColor = .green
+        myLabel.textAlignment = .center
         return myLabel
     }()
     
