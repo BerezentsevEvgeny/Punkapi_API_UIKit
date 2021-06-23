@@ -11,11 +11,16 @@ import UIKit
 class CustomCollectionViewCell: UICollectionViewCell {
     static let identifier = "CustomCollectionViewCell"
     
+    
+    
     private let myImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "house")
         imageView.backgroundColor = .yellow
         imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+//        imageView.layoutIfNeeded()
+//        imageView.layer.cornerRadius = 15
         return imageView
     }()
     
@@ -24,12 +29,14 @@ class CustomCollectionViewCell: UICollectionViewCell {
         myLabel.text = "Hello World!"
         myLabel.backgroundColor = .green
         myLabel.textAlignment = .center
+        myLabel.clipsToBounds = true
         return myLabel
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .blue
+        contentView.backgroundColor = .gray
+        contentView.layer.cornerRadius = 25
         contentView.addSubview(mylabel)
         contentView.addSubview(myImageView)
     }
