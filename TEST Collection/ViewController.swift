@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
 
@@ -25,6 +26,8 @@ class ViewController: UIViewController {
         view.addSubview(collectionView)
         collectionView.frame = view.bounds
         collectionView.backgroundColor = .white
+        
+        fetchData()
 
     }
     
@@ -42,6 +45,15 @@ class ViewController: UIViewController {
         let layout = UICollectionViewCompositionalLayout(section: section)
         
         return layout
+    }
+    
+    func fetchData() {
+        AF.request("https://api.punkapi.com/v2/beers?page=2&per_page=10").responseData { response in
+            if let data = response.data {
+                print(String(data: data, encoding: .utf8)!)
+            }
+            
+        }
     }
 
 
