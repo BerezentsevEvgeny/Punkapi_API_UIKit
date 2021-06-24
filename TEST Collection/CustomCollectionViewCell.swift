@@ -16,7 +16,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
     private let myImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "house")
-        imageView.backgroundColor = .yellow
+        imageView.backgroundColor = .white
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
 //        imageView.layoutIfNeeded()
@@ -27,7 +27,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
     private let mylabel: UILabel = {
         let myLabel = UILabel()
         myLabel.text = "Hello World!"
-        myLabel.backgroundColor = .green
+        myLabel.backgroundColor = .lightGray
         myLabel.textAlignment = .center
         myLabel.clipsToBounds = true
         return myLabel
@@ -36,7 +36,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .gray
-        contentView.layer.cornerRadius = 25
+//        contentView.layer.cornerRadius = 25
         contentView.addSubview(mylabel)
         contentView.addSubview(myImageView)
     }
@@ -55,6 +55,12 @@ class CustomCollectionViewCell: UICollectionViewCell {
                                    y: 5,
                                    width: contentView.frame.size.width - 10,
                                    height: contentView.frame.size.height - 55)
+    }
+    
+    func configureCell(with labelText: String,and image: UIImage) {
+        mylabel.text = labelText
+        myImageView.image = image
+        
     }
     
     

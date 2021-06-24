@@ -9,6 +9,9 @@ import UIKit
 import Alamofire
 
 class ViewController: UIViewController {
+    
+    var beers: [WelcomeElement] = []
+    var beerImage: UIImage = UIImage(systemName: "house")!
 
     private var collectionView: UICollectionView?
 
@@ -27,11 +30,20 @@ class ViewController: UIViewController {
         collectionView.frame = view.bounds
         collectionView.backgroundColor = .white
         
-        fetchData()
+        fetchData { result in
+            switch result {
+            case .success(let allBeers):
+                self.updateUI(with: allBeers)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
 
     }
+
     
-    
+
     private func configureLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -47,12 +59,26 @@ class ViewController: UIViewController {
         return layout
     }
     
-    func fetchData() {
+    func fetchData(complition: @escaping (Result<[WelcomeElement],Error>)->Void) {
         AF.request("https://api.punkapi.com/v2/beers?page=2&per_page=10").responseData { response in
             if let data = response.data {
-                print(String(data: data, encoding: .utf8)!)
+                do {
+                    let beer = try JSONDecoder().decode([WelcomeElement].self, from: data)
+                    complition(.success(beer))
+                }
+                catch {
+                    complition(.failure(error))
+                }
             }
+        }
+    }
+    
+    
+    func updateUI(with beers: [WelcomeElement]) {
+        DispatchQueue.main.async {
+            self.beers = beers
             
+            self.collectionView?.reloadData()
         }
     }
 
@@ -61,14 +87,24 @@ class ViewController: UIViewController {
 
 
 extension ViewController: UICollectionViewDataSource,UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 14
+        return beers.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
+        let beerItem = beers[indexPath.row]
+        let imageUrlString = beerItem.imageURL
+        AF.request(imageUrlString).responseData { response in
+            guard let imageData = response.data else { return }
+            guard let image = UIImage(data: imageData) else { return }
+            cell.configureCell(with: beerItem.name, and: image)
+    
+        }
+
         
-        return cell
+            return cell
     }
 }
 
