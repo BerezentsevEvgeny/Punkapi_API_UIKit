@@ -6,6 +6,6 @@ target 'TEST Collection' do
   use_frameworks!
 
   # Pods for TEST Collection
-pod 'Alamofire', '~> 5.2'
+pod 'Alamofire'
 
 end

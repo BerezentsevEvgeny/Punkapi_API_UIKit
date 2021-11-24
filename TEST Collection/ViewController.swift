@@ -5,7 +5,6 @@
 //  Created by Евгений Березенцев on 22.06.2021.
 //
 
-import UIKit
 import Alamofire
 
 class ViewController: UIViewController {
@@ -41,8 +40,6 @@ class ViewController: UIViewController {
         
 
     }
-
-    
 
     private func configureLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
@@ -81,8 +78,6 @@ class ViewController: UIViewController {
             self.collectionView?.reloadData()
         }
     }
-
-
 }
 
 
@@ -102,8 +97,6 @@ extension ViewController: UICollectionViewDataSource,UICollectionViewDelegate {
             cell.configureCell(with: beerItem.name, and: image)
     
         }
-
-        
             return cell
     }
 }

@@ -7,11 +7,8 @@
 
 import UIKit
 
-
 class CustomCollectionViewCell: UICollectionViewCell {
     static let identifier = "CustomCollectionViewCell"
-    
-    
     
     private let myImageView: UIImageView = {
         let imageView = UIImageView()
